@@ -1,6 +1,8 @@
 class Animal:
     _energie_min: int
     _energie_max: int
+    pelage : str
+    taille: int
 
     def __init__(self, energie_min, energie_max)->None:
         self._energie_min = energie_min
@@ -40,3 +42,26 @@ class Renard (Animal, Vivant):
     
     def alimentation(self) ->None:
         pass
+
+
+class Lapin(Animal,Vivant):
+    pelage: str
+    taille : int
+
+    def __init__(self, pelage, taille):
+        self.pelage = pelage
+        self.taille = taille
+
+    
+
+class Plante (Vivant):
+    _energie_init: int
+    _vie: int
+
+    def __init__(self, _energie_init, _vie):
+        self._energie_init = _energie_init
+        self._vie = _vie
+
+    def etre_mange(self)-> None :
+        pass
+
