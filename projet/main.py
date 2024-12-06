@@ -22,8 +22,8 @@ class Vivant:
     _vie: int # attention mettre par rapport à chaque sorte dans la classe fille
 
     def __init__(self, energie_init: int, vie:int) ->None:
-        self._energie_init : energie_init
-        self._vie : vie
+        self._energie_init = energie_init
+        self._vie = vie
 
 class Renard (Animal, Vivant):
     pelage : str #spécifier le pelage du renard et du lapin
