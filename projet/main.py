@@ -48,7 +48,7 @@ class Lapin(Animal,Vivant):
     pelage: str
     taille : int
 
-    def __init__(self, _energie_min, energie_max, energie_intit, _vie pelage, taille) -> None :
+    def __init__(self, _energie_min, energie_max, energie_intit, _vie, pelage, taille) -> None :
         super().__init__(_energie_min, energie_max, energie_intit, _vie,)
         self.pelage = pelage
         self.taille = taille
