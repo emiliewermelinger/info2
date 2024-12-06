@@ -26,10 +26,10 @@ class Vivant:
         self._vie : vie
 
 class Renard (Animal, Vivant):
-    pelage : str
+    pelage : str #spécifier le pelage du renard et du lapin
     taille: int
 
-    def __init__(self,_energie_min, _energie_max, _energie_init, _vie, pelage,taille) ->None:
+    def __init__(self,_energie_min, _energie_max, _energie_init, _vie, pelage, taille) ->None:
         super().__init__(_energie_min, _energie_max,_energie_init, _vie)
         self.pelage = pelage
         self.taille = taille
@@ -48,7 +48,8 @@ class Lapin(Animal,Vivant):
     pelage: str
     taille : int
 
-    def __init__(self, pelage, taille):
+    def __init__(self, _energie_min, energie_max, energie_intit, _vie pelage, taille) -> None :
+        super().__init__(_energie_min, energie_max, energie_intit, _vie,)
         self.pelage = pelage
         self.taille = taille
         
