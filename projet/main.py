@@ -40,6 +40,3 @@ class Renard (Animal, Vivant):
     
     def alimentation(self) ->None:
         pass
-        pass
-
-    
