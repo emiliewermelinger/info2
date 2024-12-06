@@ -51,6 +51,9 @@ class Lapin(Animal,Vivant):
     def __init__(self, pelage, taille):
         self.pelage = pelage
         self.taille = taille
+        
+    def etre_mange(self)-> None :
+        pass
 
     
 
