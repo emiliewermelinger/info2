@@ -13,38 +13,16 @@ class Animal(Vivant):
         self._energie_min = energie_min
         self._energie_max = energie_max
 
-    def deplacement(self) ->None:
-       pass 
-    
-    def reproduction(self) ->None:
-        pass
-
-    def alimentation(self) ->None:
-        pass
-
 class Renard (Animal):
 
     def __init__(self,_energie_min, _energie_max, _energie_init) ->None:
         super().__init__(_energie_min, _energie_max,_energie_init)
-
-    def deplacement(self) ->None:
-        pass
-
-    def reproduction(self)-> None:
-        pass
-    
-    def alimentation(self) ->None:
-        pass
 
 
 class Lapin(Animal):
 
     def __init__(self, _energie_min, energie_max, energie_intit) -> None :
         super().__init__(_energie_min, energie_max, energie_intit)
-        
-    def etre_mange(self)-> None :
-        pass
-
     
 
 class Plante (Vivant):
@@ -52,7 +30,3 @@ class Plante (Vivant):
 
     def __init__(self, _energie_init):
         self._energie_init = _energie_init
-
-    def etre_mange(self)-> None :
-        pass
-
