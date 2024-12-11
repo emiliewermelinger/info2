@@ -1,6 +1,5 @@
 class Vivant:
     _energie_init: int
-    _vie: int # attention mettre par rapport à chaque sorte dans la classe fille
 
     def __init__(self, energie_init: int) ->None:
         self._energie_init = energie_init

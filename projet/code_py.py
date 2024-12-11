@@ -14,9 +14,9 @@ class Actor:
     _dimension: Tuple
 
 
-    def __init__(self, position: pygame.Vector2) -> None:
+    def __init__(self, position: pygame.Vector2, speed: pygame.Vector2) -> None:
         self._position = position
-        self._speed = pygame.Vector2(randint(-1,1), randint(-1,1))
+        self._speed = pygame.Vector2
         self._dimension = (10,10)
 
     @property
@@ -180,17 +180,20 @@ class App:
         self.__actors_sprites = pygame.sprite.Group()
         for actor_00 in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
-            actor= Actor(position)
+            speed= pygame.Vector2(0,0)
+            actor= Actor(position,speed)
             ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.__actors_sprites])
 
         for actor_001 in range (520):
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-            actor = Actor(position)
+            speed = pygame.Vector2(randint(-1,1), randint(-1,1))
+            actor = Actor(position,speed)
             ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.__actors_sprites])
 
         for _ in range(22): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
-            actor= Actor(position)
+            speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
+            actor= Actor(position, speed)
             ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.__actors_sprites])
 
     def __update_actors(self) -> None:
