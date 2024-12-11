@@ -9,3 +9,10 @@ Renard: il faudrait qu'à partir d'un certain temps les renards qui n'ont rien m
 #il faut pouvoir recalculer la vitesse à chaque déplacement des renards
 
 # Critères remplis
+
+Création de plantes
+utilisation de ChatGPT afin de faire une boucle pour créer les 700 plantes.
+
+
+clamp_ip() permet de faire en sorte que les objets ne sortent pas de l'écran
+vient juste après move_ip

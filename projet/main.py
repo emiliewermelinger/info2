@@ -1,8 +1,13 @@
-class Animal:
+class Vivant:
+    _energie_init: int
+    _vie: int # attention mettre par rapport à chaque sorte dans la classe fille
+
+    def __init__(self, energie_init: int) ->None:
+        self._energie_init = energie_init
+
+class Animal(Vivant):
     _energie_min: int
     _energie_max: int
-    pelage : str
-    taille: int
 
     def __init__(self, energie_min, energie_max)->None:
         self._energie_min = energie_min
@@ -17,22 +22,10 @@ class Animal:
     def alimentation(self) ->None:
         pass
 
-class Vivant:
-    _energie_init: int
-    _vie: int # attention mettre par rapport à chaque sorte dans la classe fille
+class Renard (Animal):
 
-    def __init__(self, energie_init: int, vie:int) ->None:
-        self._energie_init = energie_init
-        self._vie = vie
-
-class Renard (Animal, Vivant):
-    pelage : str #spécifier le pelage du renard et du lapin en hiver ou en été
-    taille: int
-
-    def __init__(self,_energie_min, _energie_max, _energie_init, _vie, pelage, taille) ->None:
-        super().__init__(_energie_min, _energie_max,_energie_init, _vie)
-        self.pelage = pelage
-        self.taille = taille
+    def __init__(self,_energie_min, _energie_max, _energie_init) ->None:
+        super().__init__(_energie_min, _energie_max,_energie_init)
 
     def deplacement(self) ->None:
         pass
@@ -44,14 +37,10 @@ class Renard (Animal, Vivant):
         pass
 
 
-class Lapin(Animal,Vivant):
-    pelage: str
-    taille : int
+class Lapin(Animal):
 
-    def __init__(self, _energie_min, energie_max, energie_intit, _vie, pelage, taille) -> None :
-        super().__init__(_energie_min, energie_max, energie_intit, _vie,)
-        self.pelage = pelage
-        self.taille = taille
+    def __init__(self, _energie_min, energie_max, energie_intit) -> None :
+        super().__init__(_energie_min, energie_max, energie_intit)
         
     def etre_mange(self)-> None :
         pass
@@ -60,11 +49,9 @@ class Lapin(Animal,Vivant):
 
 class Plante (Vivant):
     _energie_init: int
-    _vie: int
 
-    def __init__(self, _energie_init, _vie):
+    def __init__(self, _energie_init):
         self._energie_init = _energie_init
-        self._vie = _vie
 
     def etre_mange(self)-> None :
         pass

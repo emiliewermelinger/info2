@@ -16,7 +16,7 @@ class Actor:
 
     def __init__(self, position: pygame.Vector2) -> None:
         self._position = position
-        self._speed = (0)
+        self._speed = pygame.Vector2(randint(-1,1), randint(-1,1))
         self._dimension = (10,10)
 
     @property
@@ -177,7 +177,7 @@ class App:
     def __init_actors(self) -> None:
         self.__player_sprite = pygame.sprite.Group()
         player: Actor = Actor(pygame.Vector2(0, 0))
-        ActorSpriteDrivenByMouse(self.__screen, player, "white", [self.__player_sprite])
+        ActorSpriteDrivenByMouse(self.__screen, player, "yellow", [self.__player_sprite])
 
         self.__actors_sprites = pygame.sprite.Group()
         #random_speed: pygame.Vector2 = pygame.Vector2(randint(-1, 1), randint(-1, 1))
@@ -186,9 +186,13 @@ class App:
             actor= Actor(position)
             ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.__actors_sprites])
         #actor_00: Actor = Actor(pygame.Vector2(randint(50, 100), randint(50, 100)))
-        actor_01: Actor = Actor(pygame.Vector2(210, 160))
+        for actor_001 in range (520):
+            position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+            actor = Actor(position)
+            ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.__actors_sprites])
+        #actor_01: Actor = Actor(pygame.Vector2(210, 160))
         #ActorSpriteDrivenBySpeed(self.__screen, actor_00, "green", [self.__actors_sprites])
-        ActorSpriteDrivenByRandom(self.__screen, actor_01, "red", [self.__actors_sprites])
+        #ActorSpriteDrivenByRandom(self.__screen, actor_01, "red", [self.__actors_sprites])
 
     def __update_actors(self) -> None:
         self.__player_sprite.update()
