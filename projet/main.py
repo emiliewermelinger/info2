@@ -26,7 +26,7 @@ class Vivant:
         self._vie = vie
 
 class Renard (Animal, Vivant):
-    pelage : str #spécifier le pelage du renard et du lapin
+    pelage : str #spécifier le pelage du renard et du lapin en hiver ou en été
     taille: int
 
     def __init__(self,_energie_min, _energie_max, _energie_init, _vie, pelage, taille) ->None:
