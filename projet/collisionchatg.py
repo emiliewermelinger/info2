@@ -194,6 +194,9 @@ class App:
             speed = pygame.Vector2(randint(-1,1), randint(-1,1))
             actor = Actor(position,speed)
             ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.lapins, self.__actors_sprites])
+            energie = 50
+            energie_max = 100
+            energie_min = 0
 
         # Renards
         for _ in range(22): 
@@ -201,6 +204,9 @@ class App:
             speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
             actor= Actor(position, speed)
             ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])
+            energie = 50
+            energie_max = 100
+            energie_min = 0
 
     def __update_actors(self) -> None:
         self.__player_sprite.update()
@@ -210,8 +216,9 @@ class App:
         # Lapins eat plants
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
         for lapin in collisions:
-            # Add logic to increase lapin energy here (not yet implemented)
             pass
+          # lapin.energie += 10 
+        #taille du lapin qui change? ou bien il faut un print? same question pour les renards
 
         # Renards eat lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)

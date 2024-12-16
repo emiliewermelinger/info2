@@ -9,6 +9,9 @@ lapins : au bout d'un moment l'énergie descend et donc il faut faire disparaît
 Renard: il faudrait qu'à partir d'un certain temps les renards qui n'ont rien mangé disparaissent
 #il faut pouvoir recalculer la vitesse à chaque déplacement des renards
 
+#taille du lapin qui change? ou bien il faut un print? same question pour les renards voir doc collisionchat sous les collisions pour ajouter une condition
+faire accouplement des renards
+
 # Critères remplis
 
 Création de plantes
@@ -45,5 +48,3 @@ J'ai ajouté les fonctionnalités suivantes :
 
 3. **Placeholders pour l'énergie :**
    - J'ai ajouté des commentaires pour indiquer où intégrer une logique d'énergie si nécessaire.
-
-Si vous voulez des explications ou des ajustements supplémentaires, faites-le-moi savoir !
