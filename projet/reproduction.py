@@ -198,7 +198,7 @@ class App:
         for _ in range(520):
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
             speed = pygame.Vector2(randint(-1,1), randint(-1,1))
-            actor = Actor(position,speed)
+            actor = Actor(position,speed,)
             ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.lapins, self.__actors_sprites])
             energie = 10
             energie_max = 20
@@ -208,11 +208,11 @@ class App:
         for _ in range(22): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             speed= pygame.Vector2 (randint(-2,2),randint(-2,2)*2)
-            actor= Actor(position, speed)
+            actor= Actor(position, speed, energie,energie_max, energie_min)
             ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])
             energie = 25
             energie_max = 50
-            energie_min = 0
+            energie_min = 0 
 
     def __update_actors(self) -> None:
         self.__player_sprite.update()
