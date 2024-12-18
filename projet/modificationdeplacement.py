@@ -14,7 +14,7 @@ class Actor:
     
     def __init__(self, position: pygame.Vector2, speed: pygame.Vector2) -> None:
         self._position = position
-        self._speed = pygame.Vector2
+        self._speed = speed
         self._dimension = (10,10)
 
     @property
@@ -111,13 +111,21 @@ class ActorSprite(pygame.sprite.Sprite):
 
     def update(self) -> None:
         pass
-    class ActorSpriteDrivenByRandom(ActorSprite):
-        def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
-         super().__init__(surface, actor, color_name, *groups)
+
+
+class ActorSpriteDrivenByRandom(ActorSprite):
+    def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
+        super().__init__(surface, actor, color_name, *groups)
+        self.change_direction_timer=24
+        
 
     def update(self):
-        random_speed: pygame.Vector2 = pygame.Vector2(randint(-1, 1), randint(-1, 1))
-        self._rect.move_ip(random_speed)
+        '''random_speed: pygame.Vector2 = pygame.Vector2(randint(-1, 1), randint(-1, 1))'''
+        self.change_direction_timer-=1
+        if self.change_direction_timer<=0:
+            self._actor.speed=pygame.Vector2(randint(-1, 1), randint(-1, 1))
+            self.change_direction_timer=24
+        self._rect.move_ip(self._actor.speed)
         if not self.test_touching_surface_boundaries():
             self._actor.position = pygame.Vector2(self.rect.topleft)
 
@@ -187,7 +195,7 @@ class App:
         # Renards
         for _ in range(22): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
-            speed= pygame.Vector2 (randint(-2,2),randint(-2,2)*2)
+            speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
             actor= Actor(position, speed)
             ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])
             energie = 25
