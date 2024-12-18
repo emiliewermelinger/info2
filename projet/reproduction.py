@@ -181,11 +181,17 @@ class App:
         self.lapins = pygame.sprite.Group()  # Group for lapins
         self.renards = pygame.sprite.Group()  # Group for renards
 
-        # Plantes
+    def __reproduction__(self)-> None:
+          # if i in collisions(self.lapins) == collisions(self.lapins):
+             #  lapins += 1
+           # else:
+               # lapins 
+
+        # Plants
         for _ in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             speed= pygame.Vector2(0,0)
-            actor= Actor(position,speed)
+            actor= Actor(position,speed) 
             ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.plants, self.__actors_sprites])
 
         # Lapins
@@ -217,8 +223,17 @@ class App:
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
         for lapin in collisions:
             pass
+          # if lapin in collisions:
           # lapin.energie += 10 
-        #taille du lapin qui change? ou bien il faut un print? same question pour les renards
+          # else: 
+          #     lapin.energie diminue au cours du temps 
+        #
+        # for lapin reproduction:
+         #   if lapin with lapin:
+         #      lapin+= s1    
+            #   lapin.energie-= 1
+        # 
+        # taille du lapin qui change? ou bien il faut un print? same question pour les renards
 
         # Renards eat lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
