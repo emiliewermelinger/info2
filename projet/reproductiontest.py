@@ -8,50 +8,6 @@ WINDOW_SIZE: Tuple[int, int] = (400, 400)
 WINDOW_TITLE: str = "pygame window 12"
 FPS = 24
 
-'''class Actor:
-    _position: pygame.Vector2
-    _speed: pygame.Vector2
-    _dimension: Tuple
-    energie:int
-    energie_max: int
-    def change_energie(self, delta: int)->None:
-        self.energie= max(0,min(self.energie+delta, self.energie_max))
-    
-    def __init__(self, position: pygame.Vector2, speed: pygame.Vector2,energie: int=0,energie_max: int=0 ) -> None:
-        self._position = position
-        self._speed = speed
-        self._dimension = (10,10)
-        self.energie= energie
-        self.energie_max= energie_max
-
-    @property
-    def position(self) -> pygame.Vector2:
-        return self._position
-
-    @position.setter
-    def position(self, position: pygame.Vector2) -> None:
-        if position.x < 0 or position.y < 0:
-            raise ValueError("each position values must be zero or positive")
-        self._position = position
-
-    @property
-    def speed(self) -> pygame.Vector2:
-        return self._speed
-
-    @speed.setter
-    def speed(self, speed: pygame.Vector2) -> None:
-        self._speed = speed
-
-    @property
-    def dimension(self) -> Tuple[int, int]:
-        return self._dimension
-
-    @dimension.setter
-    def dimension(self, dimension: Tuple[int, int]) -> None:
-        if dimension[0] <= 0 or dimension[1] <= 0:
-            raise ValueError("each dimension value must be positive")
-        self._dimension = dimension'''
-
 
 class ActorSprite(pygame.sprite.Sprite):
     _surface: pygame.Surface
