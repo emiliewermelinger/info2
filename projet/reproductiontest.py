@@ -233,16 +233,18 @@ class App:
             for lapin2 in lapins_touches:
                 if lapin1 != lapin2 and lapin1._actor.energie > 15 and lapin2._actor.energie > 15:
             # Créez un nouveau lapin
-                    position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                    speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
-                    energie = 10  # Énergie initiale du nouveau lapin
-                    energie_max = 20
-                    actor = Actor(position, speed, energie, energie_max)
-                    ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
+                    num_new_lapins= randint(1,3)
+                    for _ in range(num_new_lapins):
+                        position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                        speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
+                        energie = 10  # Énergie initiale du nouveau lapin
+                        energie_max = 20
+                        actor = Actor(position, speed, energie, energie_max)
+                        ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
             
             # Réduisez l'énergie des parents
-                    lapin1._actor.energie -= 5
-                    lapin2._actor.energie -= 5
+                        lapin1._actor.energie -= 5
+                        lapin2._actor.energie -= 5
 
 # Renards se reproduisent
         collisions = pygame.sprite.groupcollide(self.renards, self.renards, False, False)
@@ -250,16 +252,18 @@ class App:
             for renard2 in renards_touches:
                 if renard1 != renard2 and renard1._actor.energie > 30 and renard2._actor.energie > 30:
             # Créez un nouveau renard
-                    position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                    speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
-                    energie = 15  # Énergie initiale du nouveau renard
-                    energie_max = 50
-                    actor = Actor(position, speed, energie, energie_max)
-                    ActorSpriteDrivenByRandom(self.__screen, actor, "orange", [self.renards, self.__actors_sprites])
+                    num_new_renards= randint(1,5)
+                    for _ in range(num_new_renards):
+                        position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                        speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
+                        energie = 15  # Énergie initiale du nouveau renard
+                        energie_max = 50
+                        actor = Actor(position, speed, energie, energie_max)
+                        ActorSpriteDrivenByRandom(self.__screen, actor, "orange", [self.renards, self.__actors_sprites])
             
             # Réduisez l'énergie des parents
-                    renard1._actor.energie -= 10
-                    renard2._actor.energie -= 10
+                        renard1._actor.energie -= 10
+                        renard2._actor.energie -= 10
 
     def __draw_screen(self) -> None:
         self.__screen.fill(pygame.color.THECOLORS["black"])
