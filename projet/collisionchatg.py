@@ -113,7 +113,7 @@ class ActorSprite(pygame.sprite.Sprite):
         pass
 
 
-class ActorSpriteDrivenByMouse(ActorSprite):
+'''class ActorSpriteDrivenByMouse(ActorSprite): pas besoin
     def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
 
@@ -122,7 +122,7 @@ class ActorSpriteDrivenByMouse(ActorSprite):
             self._rect.topleft = pygame.mouse.get_pos()
             self._rect.move_ip(1, 1)
             if not self.test_touching_surface_boundaries():
-                self._actor.position = pygame.Vector2(self.rect.topleft)
+                self._actor.position = pygame.Vector2(self.rect.topleft)'''
 
 
 class ActorSpriteDrivenByRandom(ActorSprite):
