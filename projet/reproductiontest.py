@@ -2,12 +2,13 @@ import pygame
 from random import randint
 from sys import exit
 from typing import List, Tuple
+from actors import Actor,Lapin, Renard, Plante
 
 WINDOW_SIZE: Tuple[int, int] = (400, 400)
 WINDOW_TITLE: str = "pygame window 12"
 FPS = 24
 
-class Actor:
+'''class Actor:
     _position: pygame.Vector2
     _speed: pygame.Vector2
     _dimension: Tuple
@@ -49,7 +50,7 @@ class Actor:
     def dimension(self, dimension: Tuple[int, int]) -> None:
         if dimension[0] <= 0 or dimension[1] <= 0:
             raise ValueError("each dimension value must be positive")
-        self._dimension = dimension
+        self._dimension = dimension'''
 
 
 class ActorSprite(pygame.sprite.Sprite):
@@ -175,7 +176,6 @@ class App:
 
     def __init_actors(self) -> None:
         self.__player_sprite = pygame.sprite.Group()
-
         self.__actors_sprites = pygame.sprite.Group()
         self.plants = pygame.sprite.Group()  # Group for plants
         self.lapins = pygame.sprite.Group()  # Group for lapins
@@ -185,8 +185,8 @@ class App:
         for _ in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             speed= pygame.Vector2(0,0)
-            actor= Actor(position,speed,0,0)
-            ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.plants, self.__actors_sprites])
+            plante= Plante(position,speed)
+            ActorSpriteDrivenBySpeed(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
 
         # Lapins
         for _ in range(520):
@@ -194,8 +194,8 @@ class App:
             speed = pygame.Vector2(randint(-1,1), randint(-1,1))
             energie = 10
             energie_max = 20
-            actor = Actor(position,speed,energie,energie_max)
-            ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.lapins, self.__actors_sprites])
+            lapin = Lapin(position,speed,energie,energie_max)
+            ActorSpriteDrivenByRandom(self.__screen, lapin, "white", [self.lapins, self.__actors_sprites])
             
             energie_min = 0
 
@@ -205,8 +205,8 @@ class App:
             speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
             energie = 25
             energie_max = 50
-            actor= Actor(position, speed,energie,energie_max)
-            ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])
+            renard= Renard(position, speed,energie,energie_max)
+            ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
             
             energie_min = 0
 
