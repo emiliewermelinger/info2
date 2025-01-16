@@ -48,3 +48,38 @@ J'ai ajouté les fonctionnalités suivantes :
 
 3. **Placeholders pour l'énergie :**
    - J'ai ajouté des commentaires pour indiquer où intégrer une logique d'énergie si nécessaire.
+
+
+
+
+code durée de vie
+le problème vient de 'groupe.copy'
+# durée de vie 
+        # Supprimer les entités mortes
+        for groupe in [self.lapins, self.renards]:
+            for entite in groupe.copy():
+                if entite.energie <= 0 or entite.age >= entite.age_max:
+                    groupe.remove(entite)
+                    self.__actors_sprites.remove(entite)
+
+      #durée de vie 
+        for entite_type, params in ENTITES.items():
+            for _ in range(params["nombre"]):
+                position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                speed = pygame.Vector2(randint(-params["vitesse"], params["vitesse"]), randint(-params["vitesse"], params["vitesse"]))
+                energie = params["energie_initiale"]
+                energie_max = params["energie_max"]
+                age_max = params["age_max"]
+                reproduction_range = params["reproduction"]
+
+                if entite_type == "Plante":
+                    actor = Plante(position, speed, energie, energie_max, age_max)
+                    ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.plants, self.__actors_sprites])
+                elif entite_type == "Lapin":
+                    actor = Lapin(position, speed, energie, energie_max, age_max, reproduction_range)
+                    ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.lapins, self.__actors_sprites])
+                elif entite_type == "Renard":
+                    actor = Renard(position, speed, energie, energie_max, age_max, reproduction_range)
+                    ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])  
+
+              
