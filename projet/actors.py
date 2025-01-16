@@ -12,7 +12,7 @@ class Actor:
         self._dimension = (10, 10)
         self.energie = energie
         self.energie_max = energie_max
-        #self.age = 0
+       
     def change_energie(self, delta: int) -> None:
         self.energie = max(0, min(self.energie + delta, self.energie_max))
 
@@ -50,20 +50,14 @@ class Lapin(Actor):
     def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int, energie_max: int) -> None:
         super().__init__(position, speed, energie, energie_max)
         self.type = 'Lapin'  # Propriété spécifique au lapin
-        #self.age += 1
-        #self.age_max = 5
-        #if self.age >= self.age_max:
-            #self.lapin.remove(self)
+       
 
 # Classe Renard
 class Renard(Actor):
     def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int, energie_max: int) -> None:
         super().__init__(position, speed, energie, energie_max)
         self.type = 'Renard'  # Propriété spécifique au renard
-        #self.age += 1
-        #self.age_max = 3
-        #if self.age >= self.age_max:
-        # self.renard.remove(self)
+
 
 # Classe Plante
 class Plante(Actor):
