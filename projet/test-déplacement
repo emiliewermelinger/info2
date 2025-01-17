@@ -1,4 +1,0 @@
-if __name__ =="__main__":
-    import modificationdeplacement
-    app :modificationdeplacement.App= modificationdeplacement.App()
-    app.execute()
