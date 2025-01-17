@@ -163,11 +163,17 @@ class App:
         # Handle collisions
         # Lapins eat plants
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
-        
+        for lapin, plantes_touches in collisions.items():
+            for plante in plantes_touches:
+            # Le lapin mange la plante, prend son énergie
+                lapin._actor.rencontrer_plante(plante._actor)
           
         # Renards eat lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
-        
+        for renard, lapins_touches in collisions.items():
+            for lapin in lapins_touches:
+        # Le renard mange le lapin, prend son énergie
+                renard._actor.rencontrer_lapin(lapin._actor)
 
         collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
         for lapin1, lapins_touches in collisions.items():
@@ -177,11 +183,9 @@ class App:
                     num_new_lapins= randint(1,3)
                     for _ in range(num_new_lapins):
                         position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                        speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
-                        energie = 10  # Énergie initiale du nouveau lapin
-                        energie_max = 20
-                        actor = Vivant(position, speed, energie, energie_max)
-                        ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
+                       # speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))     
+                        lapin = Lapin(position)
+                        ActorSpriteDrivenByRandom(self.__screen, lapin, "yellow", [self.lapins, self.__actors_sprites])
             
 
 # Renards se reproduisent
@@ -193,11 +197,9 @@ class App:
                     num_new_renards= randint(1,5)
                     for _ in range(num_new_renards):
                         position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                        speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
-                        energie = 15  # Énergie initiale du nouveau renard
-                        energie_max = 50
-                        actor = Vivant(position, speed, energie, energie_max)
-                        ActorSpriteDrivenByRandom(self.__screen, actor, "orange", [self.renards, self.__actors_sprites])
+                        #speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
+                        renard = Renard(position)
+                        ActorSpriteDrivenByRandom(self.__screen, renard, "orange", [self.renards, self.__actors_sprites])
             
 
     def __draw_screen(self) -> None:

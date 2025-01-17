@@ -6,17 +6,19 @@ from random import randint
 
 # Classe de base Actor
 class Vivant:
-    def __init__(self, position: pygame.Vector2, energie: int, energie_max: int = None) -> None:
+    def __init__(self, position: pygame.Vector2, energie: int, energie_max: int = None ) -> None:
         self._position = position
         self._dimension = (10, 10)
         self.energie = energie
         self.energie_max = energie_max
-        self._speed = pygame.Vector2(0, 0)
         self._disappear = False  # Initialiser _disappear à False
        
     def change_energie(self, delta: int) -> None:
-        self.energie = max(0,min(self.energie_max, self.energie+ delta))
-        if self.energie == 0:
+        if self.energie_max is not None:
+            self.energie = max(0,min(self.energie_max, self.energie+ delta))
+        else :
+            self.energie = max(0, self.energie + delta)
+        if  self.energie == 0:
             self.disparaitre()
 
     
@@ -53,9 +55,10 @@ class Vivant:
 
 class Mammifere(Vivant):
     def __init__(self, position: pygame.Vector2, energie: int, energie_max: int, age_max: int) -> None:
-        super().__init__(position, energie, energie_max)
+        super().__init__(position, energie)
         self.type = 'Mammifère'
         self.age = 0
+        self._speed = pygame.Vector2(0, 0)
         self.age_max = age_max
         self.energie_max = energie_max
 
@@ -76,9 +79,8 @@ class Mammifere(Vivant):
 
 # Classe Lapin
 class Lapin(Mammifere):
-    def __init__(self, position: pygame.Vector2, energie: int = 10, energie_max: int = 20) -> None:
+    def __init__(self, position: pygame.Vector2,speed = pygame.Vector2(randint(-1, 1), randint(-1, 1)), energie: int = 10, energie_max: int = 20) -> None:
         super().__init__(position, energie, energie_max, age_max = 5)
-        self.speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
     
     
     def rencontrer_plante(self, plante) -> None:
@@ -93,11 +95,10 @@ class Lapin(Mammifere):
 
 # Classe Renard
 class Renard(Mammifere):
-    def __init__(self, position: pygame.Vector2, energie: int = 25, energie_max: int = 50) -> None:
+    def __init__(self, position: pygame.Vector2,speed = pygame.Vector2(randint(-2, 2), randint(-2, 2)), energie: int = 25, energie_max: int = 50) -> None:
         super().__init__(position, energie, energie_max , age_max = 3)
-        self.speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
+        
 
-    
 
     def rencontrer_lapin(self, lapin) -> None:
         if self.energie < self.energie_max:  # Vérifie si le renard a de la place pour plus d'énergie
@@ -114,8 +115,11 @@ class Renard(Mammifere):
 # Classe Plante
 class Plante(Vivant):
     def __init__(self, position: pygame.Vector2) -> None:
-        super().__init__(position, energie = 3)
+        super().__init__(position, energie = 3, energie_max = None)
         self.type = 'Plante'  # Propriété spécifique à la plante
 
     def change_energie(self, delta: int) -> None:
             super().change_energie(delta)
+            self.energie = max(0,self.energie + delta) 
+            if self.energie == 0:
+                self.disparaitre()
