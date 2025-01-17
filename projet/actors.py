@@ -6,7 +6,7 @@ from random import randint
 
 # Classe de base Actor
 class Actor:
-    def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int = 0, energie_max: int = 0,) -> None:
+    def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int = 0, energie_max: int = 0) -> None:
         self._position = position
         self._speed = speed
         self._dimension = (10, 10)
