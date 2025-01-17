@@ -83,3 +83,97 @@ le problème vient de 'groupe.copy'
                     ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])  
 
               
+
+
+
+
+              ''' collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
+        for lapin1, lapins_touches in collisions.items():
+            for lapin2 in lapins_touches:
+                if lapin1 != lapin2 and lapin1._actor.energie > 15 and lapin2._actor.energie > 15:
+            # Créez un nouveau lapin
+                    num_new_lapins= randint(1,3)
+                    for _ in range(num_new_lapins):
+                        position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                        speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
+                        energie = 10  # Énergie initiale du nouveau lapin
+                        energie_max = 20
+                        actor = Actor(position, speed, energie, energie_max)
+                        ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
+            
+            # Réduisez l'énergie des parents
+                        lapin1._actor.energie -= 5
+                        lapin2._actor.energie -= 5
+
+# Renards se reproduisent
+ collisions = pygame.sprite.groupcollide(self.renards, self.renards, False, False)
+        for renard1, renards_touches in collisions.items():
+            for renard2 in renards_touches:
+                if renard1 != renard2 and renard1._actor.energie > 30 and renard2._actor.energie > 30:
+            # Créez un nouveau renard
+                    num_new_renards= randint(1,5)
+                    for _ in range(num_new_renards):
+                        position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                        speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
+                        energie = 15  # Énergie initiale du nouveau renard
+                        energie_max = 50
+                        actor = Actor(position, speed, energie, energie_max)
+                        ActorSpriteDrivenByRandom(self.__screen, actor, "orange", [self.renards, self.__actors_sprites])
+            
+            # Réduisez l'énergie des parents
+                        renard1._actor.energie -= 10
+                        renard2._actor.energie -= 10'''
+
+
+
+
+
+
+                          # Plantes
+        '''for _ in range(700): 
+            position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
+            speed= pygame.Vector2(0,0)
+            plante= Plante(position,speed)
+            ActorSpriteDrivenBySpeed(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
+
+        # Lapins
+        for _ in range(520):
+            position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+            speed = pygame.Vector2(randint(-1,1), randint(-1,1))
+            energie = 10
+            energie_max = 20
+            lapin = Lapin(position,speed,energie,energie_max)
+            ActorSpriteDrivenByRandom(self.__screen, lapin, "white", [self.lapins, self.__actors_sprites])
+            
+            energie_min = 0
+
+        # Renards
+        for _ in range(22): 
+            position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
+            speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
+            energie = 25
+            energie_max = 50
+            renard= Renard(position, speed,energie,energie_max)
+            ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
+            
+            energie_min = 0'''
+
+
+              # Handle collisions
+        # Lapins eat plants
+        #collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
+        #for lapin in collisions:
+            #lapin._actor.change_energie(10)
+          # lapin.energie += 10 
+        #taille du lapin qui change? ou bien il faut un print? same question pour les renards
+
+        # Renards eat lapins
+       # collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
+        #for renard in collisions:
+            # Add logic to increase renard energy here (not yet implemented)
+            #renard._actor.change_energie(15)
+
+
+
+
+           

@@ -2,7 +2,7 @@ import pygame
 from random import randint
 from sys import exit
 from typing import List, Tuple
-from actors import Actor,Lapin, Renard, Plante
+from actors2 import Vivant,Lapin, Renard, Plante
 
 WINDOW_SIZE: Tuple[int, int] = (400, 400)
 WINDOW_TITLE: str = "pygame window 12"
@@ -12,12 +12,12 @@ FPS = 24
 class ActorSprite(pygame.sprite.Sprite):
     _surface: pygame.Surface
     # added to get information about the surface where sprite move to test boundaries
-    _actor: Actor
+    _actor: Vivant
     _color: pygame.Color
     _image: pygame.Surface
     _rect: pygame.Rect
 
-    def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
+    def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         pygame.sprite.Sprite.__init__(self, *groups)
         self._surface = surface
         self._actor = actor
@@ -77,7 +77,7 @@ class ActorSprite(pygame.sprite.Sprite):
 
 
 class ActorSpriteDrivenByRandom(ActorSprite):
-    def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
+    def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
         self.change_direction_timer=24
         
@@ -94,7 +94,7 @@ class ActorSpriteDrivenByRandom(ActorSprite):
 
 
 class ActorSpriteDrivenBySpeed(ActorSprite):
-    def __init__(self, surface: pygame.Surface, actor: Actor, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
+    def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
 
     def update(self):
@@ -140,49 +140,34 @@ class App:
         # Plantes
         for _ in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
-            speed= pygame.Vector2(0,0)
-            plante= Plante(position,speed)
+            plante= Plante(position)
             ActorSpriteDrivenBySpeed(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
 
         # Lapins
         for _ in range(520):
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
             speed = pygame.Vector2(randint(-1,1), randint(-1,1))
-            energie = 10
-            energie_max = 20
-            lapin = Lapin(position,speed,energie,energie_max)
+            lapin = Lapin(position)
             ActorSpriteDrivenByRandom(self.__screen, lapin, "white", [self.lapins, self.__actors_sprites])
-            
-            energie_min = 0
 
         # Renards
         for _ in range(22): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             speed= pygame.Vector2 (randint(-2,2),randint(-2,2))
-            energie = 25
-            energie_max = 50
-            renard= Renard(position, speed,energie,energie_max)
+            renard= Renard(position)
             ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
-            
-            energie_min = 0
 
     def __update_actors(self) -> None:
-        self.__player_sprite.update()
         self.__actors_sprites.update()
 
         # Handle collisions
         # Lapins eat plants
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
-        for lapin in collisions:
-            lapin._actor.change_energie(10)
-          # lapin.energie += 10 
-        #taille du lapin qui change? ou bien il faut un print? same question pour les renards
-
+        
+          
         # Renards eat lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
-        for renard in collisions:
-            # Add logic to increase renard energy here (not yet implemented)
-            renard._actor.change_energie(15)
+        
 
         collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
         for lapin1, lapins_touches in collisions.items():
@@ -195,12 +180,9 @@ class App:
                         speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
                         energie = 10  # Énergie initiale du nouveau lapin
                         energie_max = 20
-                        actor = Actor(position, speed, energie, energie_max)
+                        actor = Vivant(position, speed, energie, energie_max)
                         ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
             
-            # Réduisez l'énergie des parents
-                        lapin1._actor.energie -= 5
-                        lapin2._actor.energie -= 5
 
 # Renards se reproduisent
         collisions = pygame.sprite.groupcollide(self.renards, self.renards, False, False)
@@ -214,27 +196,31 @@ class App:
                         speed = pygame.Vector2(randint(-2, 2), randint(-2, 2))
                         energie = 15  # Énergie initiale du nouveau renard
                         energie_max = 50
-                        actor = Actor(position, speed, energie, energie_max)
+                        actor = Vivant(position, speed, energie, energie_max)
                         ActorSpriteDrivenByRandom(self.__screen, actor, "orange", [self.renards, self.__actors_sprites])
             
-            # Réduisez l'énergie des parents
-                        renard1._actor.energie -= 10
-                        renard2._actor.energie -= 10
 
     def __draw_screen(self) -> None:
         self.__screen.fill(pygame.color.THECOLORS["black"])
 
     def __draw_actors(self) -> None:
-        self.__player_sprite.draw(self.__screen)
         self.__actors_sprites.draw(self.__screen)
 
     def execute(self) -> None:
+        clock = pygame.time.Clock()
         while self.__running:
-            self.__clock.tick(self.__FPS)
             for event in pygame.event.get():
-                self.__handle_events(event)
+                if event.type == pygame.QUIT:
+                    self.__running = False
+                    pygame.quit()
+                    exit()
             self.__update_actors()
             self.__draw_screen()
             self.__draw_actors()
             pygame.display.flip()
+            clock.tick(FPS)
+
+if __name__ == "__main__":
+    app = App()
+    app.execute()
 
