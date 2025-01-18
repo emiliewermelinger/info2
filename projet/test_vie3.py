@@ -106,16 +106,12 @@ class App:
         self.__init_screen()
         self.__init_actors()
         self.__running = True
-        self.__cycle_count = 0  # Initialisation du compteur de cycles
-        self.__max_cycles = randint(10, 50)  # Nombre aléatoire de cycles entre 10 et 50
-        self.__frames_per_cycle = 48  # Nombre de frames par cycle
-        self.__frame_count = 0 
         self.display_population()
 
     def display_population(self):
         lapins_count = len(self.lapins)
         renards_count = len(self.renards)
-        print(f"Cycle {self.__cycle_count}/{self.__max_cycles} -Population Lapins: {lapins_count}, Renards: {renards_count}")
+        print(f"Population Lapins: {lapins_count}, Renards: {renards_count}")
 
     def __init_screen(self) -> None:
         self.__screen = pygame.display.set_mode(self.__window_size)
@@ -151,6 +147,7 @@ class App:
                 self.ajouter_nouveau_renard(nouvel_renard)
     
     def position_libre(self, position: pygame.Vector2, actors_sprites) -> bool:
+        """Vérifie si la position donnée est libre, c'est-à-dire qu'elle ne rentre pas en collision avec un autre acteur."""
         for actor in self.__actors_sprites:
             if actor._actor.position == position:
                 return False  
@@ -231,18 +228,7 @@ class App:
             for event in pygame.event.get():
                 self.__handle_events(event)
             self.__update_actors()
-            self.__frame_count += 1
-            if self.__frame_count >= self.__frames_per_cycle:
-                self.__frame_count = 0
-                self.__cycle_count += 1
-                self.display_population()
-
-                # Arrêt de la simulation après le nombre maximal de cycles
-                if self.__cycle_count >= self.__max_cycles:
-                    print("Fin de la simulation.")
-                    self.__running = False
-                    break
-            
+            self.display_population() 
             self.__draw_screen()
             self.__draw_actors()
             pygame.display.flip()
