@@ -107,7 +107,7 @@ class Renard(Mammifere):
         """Retourne la vitesse du lapin : déplacement d'au plus une case."""
         return pygame.Vector2(randint(-2, 2), randint(-2, 2))      
         
-    def deplacer(self, energy_per_step: int = 4) -> None:
+    def deplacer(self, energy_per_step: int = 6) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
         self.augmenter_age()
