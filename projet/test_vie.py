@@ -118,6 +118,13 @@ class App:
         self.__init_screen()
         self.__init_actors()
         self.__running = True
+        self.display_population()
+
+    def display_population(self):
+        lapins_count = len(self.lapins)
+        renards_count = len(self.renards)
+        print(f"Population Lapins: {lapins_count}, Renards: {renards_count}")
+
 
     def __init_screen(self) -> None:
         self.__screen = pygame.display.set_mode(self.__window_size)
@@ -232,6 +239,7 @@ class App:
                     nouveaux_petits = renard1._actor.rencontrer_renard(renard2._actor)
                     self.gerer_reproduction(renard1._actor, nouveaux_petits, 'Renard')
 
+
     def __draw_screen(self) -> None:
         self.__screen.fill(pygame.color.THECOLORS["black"])
 
@@ -245,6 +253,7 @@ class App:
             for event in pygame.event.get():
                 self.__handle_events(event)
             self.__update_actors()
+            self.display_population() 
             self.__draw_screen()
             self.__draw_actors()
             pygame.display.flip()

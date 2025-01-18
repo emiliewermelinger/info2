@@ -77,15 +77,13 @@ class Mammifere(Vivant):
        
 
     def augmenter_age(self) -> None:
-        """Incrémente l'âge de l'acteur"""
-        if self.age < self.age_max:
-            self.age += 1  # Augmente l'âge de l'acteur
+        self.age += 1
+        if self.age >= self.age_max:
+            self.disparaitre()
 
     
 
-    def reproduire(self) -> None:
-        """Quand un mammifère se reproduit, il perd 3 points d'énergie."""
-        self.change_energie(-6)  # Perdre 3 points d'énergie lors de la reproduction
+    
 
 
 # Classe Lapin
@@ -100,9 +98,10 @@ class Lapin(Mammifere):
 
         
 
-    def deplacer(self, max_steps: int = 1, energy_per_step: int = 2) -> None:
+    def deplacer(self, energy_per_step: int = 1) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
+        self.augmenter_age()
         
          
     
@@ -118,6 +117,10 @@ class Lapin(Mammifere):
         """Quand un lapin rencontre un autre lapin, ils se reproduisent et créent de 1 à 3 nouveaux lapins."""
         self.reproduire()  # Le lapin perd de l'énergie lors de la reproduction
         return randint(1, 3)
+    
+    def reproduire(self) -> None:
+        """Quand un mammifère se reproduit, il perd 3 points d'énergie."""
+        self.change_energie(-6)  # Perdre 3 points d'énergie lors de la reproduction
 
 # Classe Renard
 class Renard(Mammifere):
@@ -129,9 +132,10 @@ class Renard(Mammifere):
         return pygame.Vector2(randint(-2, 2), randint(-2, 2))
         
         
-    def deplacer(self, max_steps: int = 1, energy_per_step: int = 1) -> None:
+    def deplacer(self, energy_per_step: int = 4) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
+        self.augmenter_age()
         
 
 
@@ -145,6 +149,10 @@ class Renard(Mammifere):
         """Quand un renard rencontre un autre renard, ils se reproduisent et créent de 1 à 5 nouveaux renards."""
         self.reproduire()  # Le renard perd de l'énergie lors de la reproduction
         return randint(1, 5)
+    
+    def reproduire(self) -> None:
+        """Quand un mammifère se reproduit, il perd 3 points d'énergie."""
+        self.change_energie(-12)  # Perdre 3 points d'énergie lors de la reproduction
         
 
 
