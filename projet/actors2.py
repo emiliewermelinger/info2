@@ -6,7 +6,6 @@ from random import randint
 
 WINDOW_SIZE = (400, 400)
 
-
 # Classe de base Actor
 class Vivant:
     def __init__(self, position: pygame.Vector2, energie: int, energie_max: int = None, speed: pygame.Vector2 = pygame.Vector2(0, 0) ) -> None:
@@ -24,7 +23,6 @@ class Vivant:
             self.energie = max(0, self.energie + delta)
         if  self.energie == 0:
             self.disparaitre()
-
     
     def disparaitre(self) -> None:
         self._disappear = True
@@ -60,31 +58,14 @@ class Vivant:
 class Mammifere(Vivant):
     def __init__(self, position: pygame.Vector2, energie: int, energie_max: int, age_max: int, speed: pygame.Vector2 = pygame.Vector2(0, 0)) -> None:
         super().__init__(position, energie, speed)
-        self.type = 'Mammifère'
         self.age = 0
         self.age_max = age_max
-        self.energie_max = energie_max
-
-    
-    def deplacer(self, max_steps: int, energy_per_step: int = 1) -> pygame.Vector2:
-        steps_x = randint(-max_steps, max_steps)
-        steps_y = randint(-max_steps, max_steps)
-        speed = pygame.Vector2(steps_x, steps_y)
-        self._position += speed  # Déplacer l'acteur
-        self.change_energie(-energy_per_step)
-        
-
-       
+        self.energie_max = energie_max      
 
     def augmenter_age(self) -> None:
         self.age += 1
         if self.age >= self.age_max:
             self.disparaitre()
-
-    
-
-    
-
 
 # Classe Lapin
 class Lapin(Mammifere):
@@ -94,17 +75,12 @@ class Lapin(Mammifere):
 
     def get_speed(self) -> pygame.Vector2:
         """Retourne la vitesse du renard : déplacement d'au plus deux cases."""
-        return pygame.Vector2(randint(-1, 1), randint(-1, 1))
-
-        
+        return pygame.Vector2(randint(-1, 1), randint(-1, 1))     
 
     def deplacer(self, energy_per_step: int = 1) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
-        self.augmenter_age()
-        
-         
-    
+        self.augmenter_age()  
     
     def rencontrer_plante(self, plante) -> None:
         plante_actor = plante._actor
@@ -129,16 +105,13 @@ class Renard(Mammifere):
     
     def get_speed(self) -> pygame.Vector2:
         """Retourne la vitesse du lapin : déplacement d'au plus une case."""
-        return pygame.Vector2(randint(-2, 2), randint(-2, 2))
-        
+        return pygame.Vector2(randint(-2, 2), randint(-2, 2))      
         
     def deplacer(self, energy_per_step: int = 4) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
         self.augmenter_age()
-        
-
-
+    
     def rencontrer_lapin(self, lapin) -> None:
         if self.energie < self.energie_max:  # Vérifie si le renard a de la place pour plus d'énergie
             self.change_energie(lapin.energie) 
@@ -154,13 +127,10 @@ class Renard(Mammifere):
         """Quand un mammifère se reproduit, il perd 3 points d'énergie."""
         self.change_energie(-12)  # Perdre 3 points d'énergie lors de la reproduction
         
-
-
 # Classe Plante
 class Plante(Vivant):
     def __init__(self, position: pygame.Vector2) -> None:
         super().__init__(position, energie = 3, energie_max = None)
-        self.type = 'Plante'  # Propriété spécifique à la plante
 
     def change_energie(self, delta: int) -> None:
             super().change_energie(delta)
