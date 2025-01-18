@@ -129,16 +129,12 @@ class App:
             exit()
 
     def ajouter_nouvel_lapin(self, lapin: Lapin) -> None:
-        """Ajoute un nouvel lapin à la liste des acteurs."""
         ActorSpriteDrivenByRandom(self.__screen, lapin, "yellow", [self.lapins, self.__actors_sprites])
 
     def ajouter_nouveau_renard(self, renard: Renard) -> None:
-        """Ajoute un nouveau renard à la liste des acteurs."""
         ActorSpriteDrivenByRandom(self.__screen, renard, "orange", [self.renards, self.__actors_sprites])
 
     def gerer_reproduction(self, acteur, nouveaux_petits: int, type_acteur: str) -> None:
-        """Gère la reproduction en ajoutant les nouveaux petits et en enlevant de l'énergie."""
-        # Perdre de l'énergie pour la reproduction
         acteur.reproduire()
 
         for _ in range(nouveaux_petits):
@@ -158,15 +154,15 @@ class App:
         """Vérifie si la position donnée est libre, c'est-à-dire qu'elle ne rentre pas en collision avec un autre acteur."""
         for actor in self.__actors_sprites:
             if actor._actor.position == position:
-                return False  # La position est occupée
-        return True  # La position est libre
+                return False  
+        return True 
 
     def __init_actors(self) -> None:
         self.__player_sprite = pygame.sprite.Group()
         self.__actors_sprites = pygame.sprite.Group()
-        self.plants = pygame.sprite.Group()  # Group for plants
-        self.lapins = pygame.sprite.Group()  # Group for lapins
-        self.renards = pygame.sprite.Group()  # Group for renards
+        self.plants = pygame.sprite.Group()  
+        self.lapins = pygame.sprite.Group()  
+        self.renards = pygame.sprite.Group()  
 
         # Plantes
         for _ in range(700): 
@@ -196,14 +192,13 @@ class App:
         self.__player_sprite.update()
         self.__actors_sprites.update()
 
-        # Handle collisions
-        # Lapins eat plants
+        # Lapins mangent plantes
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
         for lapin, plantes in collisions.items():
             for plante in plantes:
                 lapin._actor.rencontrer_plante(plante)
      
-        # Renards eat lapins
+        # Renards mangent lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
         for renard, lapins in collisions.items():
             for lapin in lapins:
