@@ -87,15 +87,8 @@ class ActorSpriteDrivenByRandom(ActorSprite):
         new_position.y = max(0, min(new_position.y, self._surface.get_height() - self.rect.height))
         self.rect.topleft = new_position.topleft
         self._actor.position = pygame.Vector2(self.rect.topleft)
-        
-class ActorSpriteDrivenBySpeed(ActorSprite):
-    def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
-        super().__init__(surface, actor, color_name, *groups)
-
-    def update(self):
-        self.rect.move_ip(0,0)
-        if not self.test_touching_surface_boundaries():
-            self._actor.position = pygame.Vector2(self.rect.topleft)
+        self._actor.deplacer()
+    
 
 class App:
     __window_size: Tuple[int, int] = WINDOW_SIZE
@@ -171,7 +164,7 @@ class App:
         for _ in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             plante= Plante(position)
-            ActorSpriteDrivenBySpeed(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
+            ActorSprite(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
 
         # Lapins
         for _ in range(520):
@@ -210,7 +203,7 @@ class App:
         collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
         for lapin1, lapins_touches in collisions.items():
             for lapin2 in lapins_touches:
-                if lapin1 != lapin2 and lapin1._actor.energie > 15 and lapin2._actor.energie > 15:
+                if lapin1 != lapin2 and lapin1._actor.energie > 12 and lapin2._actor.energie > 12:
                     nouveaux_petits = lapin1._actor.rencontrer_lapin(lapin2._actor)
                     self.gerer_reproduction(lapin1._actor, nouveaux_petits, 'Lapin')
 
@@ -218,7 +211,7 @@ class App:
         collisions = pygame.sprite.groupcollide(self.renards, self.renards, False, False)
         for renard1, renards_touches in collisions.items():
             for renard2 in renards_touches:
-                if renard1 != renard2 and renard1._actor.energie > 30 and renard2._actor.energie > 30:
+                if renard1 != renard2 and renard1._actor.energie > 15 and renard2._actor.energie > 15:
                     nouveaux_petits = renard1._actor.rencontrer_renard(renard2._actor)
                     self.gerer_reproduction(renard1._actor, nouveaux_petits, 'Renard')
 
