@@ -50,6 +50,7 @@ class Lapin(Actor):
     def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int, energie_max: int) -> None:
         super().__init__(position, speed, energie, energie_max)
         self.type = 'Lapin'  # Propriété spécifique au lapin
+        self.energie = 10
        
 
 # Classe Renard
@@ -57,6 +58,7 @@ class Renard(Actor):
     def __init__(self, position: pygame.Vector2, speed: pygame.Vector2, energie: int, energie_max: int) -> None:
         super().__init__(position, speed, energie, energie_max)
         self.type = 'Renard'  # Propriété spécifique au renard
+        self.energie = 20
 
 
 # Classe Plante
