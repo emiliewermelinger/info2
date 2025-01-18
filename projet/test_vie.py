@@ -82,10 +82,12 @@ class ActorSpriteDrivenByRandom(ActorSprite):
         if self.change_direction_timer<=0:
             self._actor.speed=self._actor.get_speed()
             self.change_direction_timer=24
-        self._rect.move_ip(self._actor.speed)
-        if not self.test_touching_surface_boundaries():
-            self._actor.position = pygame.Vector2(self.rect.topleft)
-    
+        new_position = self.rect.move(self._actor.speed)
+        new_position.x = max(0, min(new_position.x, self._surface.get_width() - self.rect.width))
+        new_position.y = max(0, min(new_position.y, self._surface.get_height() - self.rect.height))
+        self.rect.topleft = new_position.topleft
+        self._actor.position = pygame.Vector2(self.rect.topleft)
+        
 class ActorSpriteDrivenBySpeed(ActorSprite):
     def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
@@ -129,6 +131,7 @@ class App:
             exit()
 
     def ajouter_nouvel_lapin(self, lapin: Lapin) -> None:
+
         ActorSpriteDrivenByRandom(self.__screen, lapin, "yellow", [self.lapins, self.__actors_sprites])
 
     def ajouter_nouveau_renard(self, renard: Renard) -> None:

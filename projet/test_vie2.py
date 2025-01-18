@@ -8,10 +8,8 @@ WINDOW_SIZE: Tuple[int, int] = (400, 400)
 WINDOW_TITLE: str = "pygame window 12"
 FPS = 24
 
-
 class ActorSprite(pygame.sprite.Sprite):
     _surface: pygame.Surface
-    # added to get information about the surface where sprite move to test boundaries
     _actor: Vivant
     _color: pygame.Color
     _image: pygame.Surface
@@ -73,14 +71,12 @@ class ActorSprite(pygame.sprite.Sprite):
     def update(self) -> None:
         pass
 
-
 class ActorSpriteDrivenByRandom(ActorSprite):
     def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
         self.change_direction_timer=24
         self._actor.speed = self._actor.get_speed()
         
-
     def update(self):
         self.change_direction_timer-=1
         if self.change_direction_timer<=0:
@@ -90,8 +86,6 @@ class ActorSpriteDrivenByRandom(ActorSprite):
         if not self.test_touching_surface_boundaries():
             self._actor.position = pygame.Vector2(self.rect.topleft)
     
-
-
 class ActorSpriteDrivenBySpeed(ActorSprite):
     def __init__(self, surface: pygame.Surface, actor: Vivant, color_name: str, *groups: List[pygame.sprite.Group]) -> None:
         super().__init__(surface, actor, color_name, *groups)
@@ -100,7 +94,6 @@ class ActorSpriteDrivenBySpeed(ActorSprite):
         self.rect.move_ip(0,0)
         if not self.test_touching_surface_boundaries():
             self._actor.position = pygame.Vector2(self.rect.topleft)
-
 
 class App:
     __window_size: Tuple[int, int] = WINDOW_SIZE
@@ -118,6 +111,12 @@ class App:
         self.__init_screen()
         self.__init_actors()
         self.__running = True
+        self.display_population()
+
+    def display_population(self):
+        lapins_count = len(self.lapins)
+        renards_count = len(self.renards)
+        print(f"Population Lapins: {lapins_count}, Renards: {renards_count}")
 
     def __init_screen(self) -> None:
         self.__screen = pygame.display.set_mode(self.__window_size)
@@ -130,16 +129,13 @@ class App:
             exit()
 
     def ajouter_nouvel_lapin(self, lapin: Lapin) -> None:
-        """Ajoute un nouvel lapin à la liste des acteurs."""
+
         ActorSpriteDrivenByRandom(self.__screen, lapin, "yellow", [self.lapins, self.__actors_sprites])
 
     def ajouter_nouveau_renard(self, renard: Renard) -> None:
-        """Ajoute un nouveau renard à la liste des acteurs."""
         ActorSpriteDrivenByRandom(self.__screen, renard, "orange", [self.renards, self.__actors_sprites])
 
     def gerer_reproduction(self, acteur, nouveaux_petits: int, type_acteur: str) -> None:
-        """Gère la reproduction en ajoutant les nouveaux petits et en enlevant de l'énergie."""
-        # Perdre de l'énergie pour la reproduction
         acteur.reproduire()
 
         for _ in range(nouveaux_petits):
@@ -159,17 +155,15 @@ class App:
         """Vérifie si la position donnée est libre, c'est-à-dire qu'elle ne rentre pas en collision avec un autre acteur."""
         for actor in self.__actors_sprites:
             if actor._actor.position == position:
-                return False  # La position est occupée
-        return True  # La position est libre
+                return False  
+        return True 
 
     def __init_actors(self) -> None:
         self.__player_sprite = pygame.sprite.Group()
         self.__actors_sprites = pygame.sprite.Group()
-        self.plants = pygame.sprite.Group()  # Group for plants
-        self.lapins = pygame.sprite.Group()  # Group for lapins
-        self.renards = pygame.sprite.Group()  # Group for renards
-
-
+        self.plants = pygame.sprite.Group()  
+        self.lapins = pygame.sprite.Group()  
+        self.renards = pygame.sprite.Group()  
 
         # Plantes
         for _ in range(700): 
@@ -184,9 +178,7 @@ class App:
                 position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
         
             lapin = Lapin(position)
-            ActorSpriteDrivenByRandom(self.__screen, lapin, "white", [self.lapins, self.__actors_sprites])
-            
-            
+            ActorSpriteDrivenByRandom(self.__screen, lapin, "white", [self.lapins, self.__actors_sprites])     
 
         # Renards
         for _ in range(22): 
@@ -197,21 +189,17 @@ class App:
             renard= Renard(position)
             ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
             
-           
-
     def __update_actors(self) -> None:
         self.__player_sprite.update()
         self.__actors_sprites.update()
 
-        # Handle collisions
-        # Lapins eat plants
+        # Lapins mangent plantes
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
         for lapin, plantes in collisions.items():
             for plante in plantes:
                 lapin._actor.rencontrer_plante(plante)
      
-
-        # Renards eat lapins
+        # Renards mangent lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
         for renard, lapins in collisions.items():
             for lapin in lapins:
@@ -245,6 +233,7 @@ class App:
             for event in pygame.event.get():
                 self.__handle_events(event)
             self.__update_actors()
+            self.display_population() 
             self.__draw_screen()
             self.__draw_actors()
             pygame.display.flip()
