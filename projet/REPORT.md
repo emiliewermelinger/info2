@@ -51,59 +51,32 @@ J'ai ajouté les fonctionnalités suivantes :
 
 
 
-
-code durée de vie
-le problème vient de 'groupe.copy'
-# durée de vie 
-        # Supprimer les entités mortes
-        for groupe in [self.lapins, self.renards]:
-            for entite in groupe.copy():
-                if entite.energie <= 0 or entite.age >= entite.age_max:
-                    groupe.remove(entite)
-                    self.__actors_sprites.remove(entite)
-
-      #durée de vie 
-        for entite_type, params in ENTITES.items():
-            for _ in range(params["nombre"]):
+# cycle de vie 
+        
+        def cycle_renards_callback(self) -> None:
+        """
+        Actions spécifiques à effectuer à chaque étape pour les renards.
+        """
+        print("Cycle des renards terminé !")
+        
+        # Limite la création de renards si leur population est faible
+        if len(self.renards) < 100:  # Par exemple, 100 renards max
+            for _ in range(2):  # Maximum 2 nouveaux renards par cycle
                 position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                speed = pygame.Vector2(randint(-params["vitesse"], params["vitesse"]), randint(-params["vitesse"], params["vitesse"]))
-                energie = params["energie_initiale"]
-                energie_max = params["energie_max"]
-                age_max = params["age_max"]
-                reproduction_range = params["reproduction"]
-
-                if entite_type == "Plante":
-                    actor = Plante(position, speed, energie, energie_max, age_max)
-                    ActorSpriteDrivenBySpeed(self.__screen, actor, "green", [self.plants, self.__actors_sprites])
-                elif entite_type == "Lapin":
-                    actor = Lapin(position, speed, energie, energie_max, age_max, reproduction_range)
-                    ActorSpriteDrivenByRandom(self.__screen, actor, "white", [self.lapins, self.__actors_sprites])
-                elif entite_type == "Renard":
-                    actor = Renard(position, speed, energie, energie_max, age_max, reproduction_range)
-                    ActorSpriteDrivenByRandom(self.__screen, actor, "red", [self.renards, self.__actors_sprites])  
-
-              
+                while not self.position_libre(position, self.__actors_sprites):
+                    position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+                
+                renard = Renard(position)
+                ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
 
 
 
 
-              ''' collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
-        for lapin1, lapins_touches in collisions.items():
-            for lapin2 in lapins_touches:
-                if lapin1 != lapin2 and lapin1._actor.energie > 15 and lapin2._actor.energie > 15:
-            # Créez un nouveau lapin
-                    num_new_lapins= randint(1,3)
-                    for _ in range(num_new_lapins):
-                        position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                        speed = pygame.Vector2(randint(-1, 1), randint(-1, 1))
-                        energie = 10  # Énergie initiale du nouveau lapin
-                        energie_max = 20
-                        actor = Actor(position, speed, energie, energie_max)
-                        ActorSpriteDrivenByRandom(self.__screen, actor, "yellow", [self.lapins, self.__actors_sprites])
-            
-            # Réduisez l'énergie des parents
-                        lapin1._actor.energie -= 5
-                        lapin2._actor.energie -= 5
+
+
+
+
+
 
 # Renards se reproduisent
  collisions = pygame.sprite.groupcollide(self.renards, self.renards, False, False)

@@ -132,8 +132,8 @@ class App:
         self.display_population()
         
         # Initialisation normale 
-        self.cycle_lapins = CycleManager(120, self.cycle_lapins_callback)  # 48 frames = 2 secondes/ 120 = 5secondes
-        self.cycle_renards = CycleManager(120, self.cycle_renards_callback)  # 48 frames = 2 secondes / 120 = 5secondes
+        self.cycle_lapins = CycleManager(240, self.cycle_lapins_callback)  # 48 frames = 2 secondes/ 120 = 5secondes
+        self.cycle_renards = CycleManager(240, self.cycle_renards_callback)  # 48 frames = 2 secondes / 120 = 5secondes
         self.cycle_plantes = CycleManager(120, self.cycle_plantes_callback)  # Régénération toutes les 5 secondes 
 
 
@@ -187,49 +187,9 @@ class App:
         self.__actors_sprites = pygame.sprite.Group()
         self.plants = pygame.sprite.Group()  
         self.lapins = pygame.sprite.Group()  
-        self.renards = pygame.sprite.Group()  
+        self.renards = pygame.sprite.Group() 
 
-#cycle on peut potentiellement enlever celui des plantes
-
-    def cycle_plantes_callback(self) -> None:
-        """
-        Actions spécifiques à effectuer à chaque étape pour régénérer les plantes.
-        """
-        print("Cycle des plantes terminé ! Régénération...")
-        for _ in range(50):  # Exemple : régénérer 50 plantes par cycle
-            position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-            while not self.position_libre(position, self.__actors_sprites):
-                position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-            
-            plante = Plante(position)
-            ActorSprite(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
-
-
-    def cycle_lapins_callback(self) -> None:
-        """
-        Actions spécifiques à effectuer à chaque étape pour les lapins.
-        """
-        print("Cycle des lapins terminé !")
-        for lapin in self.lapins:
-            lapin._actor.augmenter_age()  # Exemple : Ajoute une action spécifique
-
-    def cycle_renards_callback(self) -> None:
-        """
-        Actions spécifiques à effectuer à chaque étape pour les renards.
-        """
-        print("Cycle des renards terminé !")
-        
-        # Limite la création de renards si leur population est faible
-        if len(self.renards) < 10:  # Par exemple, 10 renards max
-            for _ in range(2):  # Maximum 2 nouveaux renards par cycle
-                position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                while not self.position_libre(position, self.__actors_sprites):
-                    position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
-                
-                renard = Renard(position)
-                ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
-
-        # Plantes
+                # Plantes
         for _ in range(700): 
             position = pygame.Vector2(randint(0, WINDOW_SIZE[0]-10), randint(0, WINDOW_SIZE[1]-10))
             plante= Plante(position)
@@ -252,7 +212,67 @@ class App:
             
             renard= Renard(position)
             ActorSpriteDrivenByRandom(self.__screen, renard, "red", [self.renards, self.__actors_sprites])
+             
+
+#cycle on peut potentiellement enlever celui des plantes
+
+    def cycle_plantes_callback(self) -> None:
+        """
+        Actions spécifiques à effectuer à chaque étape pour régénérer les plantes.
+        """
+        print("Cycle des plantes terminé ! Régénération...")
+        for _ in range(100):  # Exemple : régénérer 50 plantes par cycle
+            position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
+            while not self.position_libre(position, self.__actors_sprites):
+                position = pygame.Vector2(randint(0, WINDOW_SIZE[0] - 10), randint(0, WINDOW_SIZE[1] - 10))
             
+            plante = Plante(position)
+            ActorSprite(self.__screen, plante, "green", [self.plants, self.__actors_sprites])
+
+
+    def cycle_lapins_callback(self) -> None:
+            """
+            Actions spécifiques à effectuer à chaque étape pour les lapins.
+            """
+            print("Cycle des lapins terminé !")
+            
+            # Incrémenter le compteur
+            self.cycle_counter_lapins += 1
+
+            # Mortalité tous les 5 cycles
+            if self.cycle_counter_lapins >= 5:
+                print("Tous les lapins meurent !")
+                for lapin in self.lapins:
+                    lapin.kill()  # Supprimer les sprites
+                self.cycle_counter_lapins = 0  # Réinitialiser le compteur
+            else:
+                # Vieillissement des lapins si nécessaire
+                for lapin in self.lapins:
+                    lapin._actor.augmenter_age()
+
+
+    def cycle_renards_callback(self) -> None:
+            """
+            Actions spécifiques à effectuer à chaque étape pour les renards.
+            """
+            print("Cycle des renards terminé !")
+            
+            # Incrémenter le compteur
+            self.cycle_counter_renards += 1
+
+            # Mortalité tous les 3 cycles
+            if self.cycle_counter_renards >= 3:
+                print("Tous les renards meurent !")
+                for renard in self.renards:
+                    renard.kill()  # Supprimer les sprites
+                self.cycle_counter_renards = 0  # Réinitialiser le compteur
+            else:
+                # Vieillissement des renards si nécessaire
+                for renard in self.renards:
+                    renard._actor.augmenter_age()
+
+
+
     def __update_actors(self) -> None:
         # Mise à jour normale des acteurs
         self.__player_sprite.update()
