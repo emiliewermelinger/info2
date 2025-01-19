@@ -6,7 +6,7 @@ from actors2 import *
 
 WINDOW_SIZE: Tuple[int, int] = (400, 400)
 WINDOW_TITLE: str = "pygame window 12"
-FPS = 24
+FPS =12
 
 class ActorSprite(pygame.sprite.Sprite):
     _surface: pygame.Surface
@@ -88,7 +88,8 @@ class ActorSpriteDrivenByRandom(ActorSprite):
         self.rect.topleft = new_position.topleft
         self._actor.position = pygame.Vector2(self.rect.topleft)
         self._actor.deplacer()
-    
+        if self._actor.energie == 0:
+            self.kill()
 
 class App:
     __window_size: Tuple[int, int] = WINDOW_SIZE
@@ -108,14 +109,26 @@ class App:
         self.__running = True
         self.__cycle_count = 0  # Initialisation du compteur de cycles
         self.__max_cycles = randint(10, 50)  # Nombre aléatoire de cycles entre 10 et 50
-        self.__frames_per_cycle = 48  # Nombre de frames par cycle
-        self.__frame_count = 0 
+        self.__frames_per_cycle = 12 # Nombre de frames par cycle
+        self.__frame_count = 0
+        self.cycle_counter = 0 
         self.display_population()
 
     def display_population(self):
         lapins_count = len(self.lapins)
         renards_count = len(self.renards)
         print(f"Cycle {self.__cycle_count}/{self.__max_cycles} -Population Lapins: {lapins_count}, Renards: {renards_count}")
+
+    def __incrementer_age(self):
+        for lapin in list(self.lapins):
+            lapin._actor.augmenter_age()
+            if lapin._actor.age >= lapin._actor.age_max:
+                lapin.kill()
+
+        for renard in list(self.renards):
+            renard._actor.augmenter_age()
+            if renard._actor.age >= renard._actor.age_max:
+                renard.kill()    
 
     def __init_screen(self) -> None:
         self.__screen = pygame.display.set_mode(self.__window_size)
@@ -128,7 +141,6 @@ class App:
             exit()
 
     def ajouter_nouvel_lapin(self, lapin: Lapin) -> None:
-
         ActorSpriteDrivenByRandom(self.__screen, lapin, "yellow", [self.lapins, self.__actors_sprites])
 
     def ajouter_nouveau_renard(self, renard: Renard) -> None:
@@ -206,7 +218,7 @@ class App:
         collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
         for lapin1, lapins_touches in collisions.items():
             for lapin2 in lapins_touches:
-                if lapin1 != lapin2 and lapin1._actor.energie > 12 and lapin2._actor.energie > 12:
+                if lapin1 != lapin2 and lapin1._actor.energie > 10 and lapin2._actor.energie > 10:
                     nouveaux_petits = lapin1._actor.rencontrer_lapin(lapin2._actor)
                     self.gerer_reproduction(lapin1._actor, nouveaux_petits, 'Lapin')
 
@@ -236,12 +248,12 @@ class App:
                 self.__frame_count = 0
                 self.__cycle_count += 1
                 self.display_population()
+                self.__incrementer_age()
 
-                # Arrêt de la simulation après le nombre maximal de cycles
-                if self.__cycle_count >= self.__max_cycles:
-                    print("Fin de la simulation.")
-                    self.__running = False
-                    break
+            if self.__cycle_count >= self.__max_cycles:
+                print("Fin de la simulation.")
+                self.__running = False
+                break
             
             self.__draw_screen()
             self.__draw_actors()

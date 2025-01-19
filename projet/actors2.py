@@ -24,7 +24,7 @@ class Vivant:
             self.disparaitre()
     
     def disparaitre(self) -> None:
-        self._disappear = True
+        self._disappear = True   
 
     @property
     def position(self) -> pygame.Vector2:
@@ -63,21 +63,18 @@ class Mammifere(Vivant):
 
     def augmenter_age(self) -> None:
         self.age += 1
-        if self.age >= self.age_max:
-            self.disparaitre()
 
 class Lapin(Mammifere):
     def __init__(self, position: pygame.Vector2, speed:pygame.Vector2 = pygame.Vector2(randint(-1, 1), randint(-1, 1)), energie: int = 10, energie_max: int = 20) -> None:
         super().__init__(position, energie, energie_max, age_max = 5)
         self._speed = speed
-
+        
     def get_speed(self) -> pygame.Vector2:
         return pygame.Vector2(randint(-1, 1), randint(-1, 1))     
 
     def deplacer(self, energy_per_step: int = 1) -> None:
         self._position += self.speed
-        self.change_energie(-energy_per_step)
-        self.augmenter_age()  
+        self.change_energie(-energy_per_step)  
     
     def rencontrer_plante(self, plante) -> None:
         plante_actor = plante._actor
@@ -91,19 +88,18 @@ class Lapin(Mammifere):
         return randint(1, 3)
     
     def reproduire(self) -> None:
-        self.change_energie(-4)  
+        self.change_energie(-3)  
 
 class Renard(Mammifere):
     def __init__(self, position: pygame.Vector2,speed = pygame.Vector2(randint(-2, 2), randint(-2, 2)), energie: int = 25, energie_max: int = 50) -> None:
         super().__init__(position, energie, energie_max , age_max = 3, speed = speed)
-    
+
     def get_speed(self) -> pygame.Vector2:
         return pygame.Vector2(randint(-2, 2), randint(-2, 2))      
         
-    def deplacer(self, energy_per_step: int = 2) -> None:
+    def deplacer(self, energy_per_step: int = 1) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
-        self.augmenter_age()
     
     def rencontrer_lapin(self, lapin) -> None:
         if self.energie < self.energie_max:  
@@ -116,7 +112,7 @@ class Renard(Mammifere):
         return randint(1, 5)
     
     def reproduire(self) -> None:
-        self.change_energie(-10)  
+        self.change_energie(-5)  
         
 class Plante(Vivant):
     def __init__(self, position: pygame.Vector2) -> None:
