@@ -88,7 +88,7 @@ class Lapin(Mammifere):
         return randint(1, 3)
     
     def reproduire(self) -> None:
-        self.change_energie(-3)  
+        self.change_energie(-2)  
 
 class Renard(Mammifere):
     def __init__(self, position: pygame.Vector2,speed = pygame.Vector2(randint(-2, 2), randint(-2, 2)), energie: int = 25, energie_max: int = 50) -> None:
@@ -97,7 +97,7 @@ class Renard(Mammifere):
     def get_speed(self) -> pygame.Vector2:
         return pygame.Vector2(randint(-2, 2), randint(-2, 2))      
         
-    def deplacer(self, energy_per_step: int = 1) -> None:
+    def deplacer(self, energy_per_step: int = 3) -> None:
         self._position += self.speed
         self.change_energie(-energy_per_step)
     
@@ -112,7 +112,7 @@ class Renard(Mammifere):
         return randint(1, 5)
     
     def reproduire(self) -> None:
-        self.change_energie(-5)  
+        self.change_energie(-3)  
         
 class Plante(Vivant):
     def __init__(self, position: pygame.Vector2) -> None:

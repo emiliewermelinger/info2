@@ -109,7 +109,7 @@ class App:
         self.__running = True
         self.__cycle_count = 0  # Initialisation du compteur de cycles
         self.__max_cycles = randint(10, 50)  # Nombre aléatoire de cycles entre 10 et 50
-        self.__frames_per_cycle = 12 # Nombre de frames par cycle
+        self.__frames_per_cycle = 10 # Nombre de frames par cycle
         self.__frame_count = 0
         self.cycle_counter = 0 
         self.display_population()
