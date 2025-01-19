@@ -16,3 +16,5 @@ Nous avons décidé de ne pas mettre l'âge maximum des renards et lapins en pri
 La vitesse ainsi que l'énergie maximum que peuvent atteindre les lapins et renards ont été mis en privé afin que personne ne puisse modifier ces données.
 
 Les dimensions des invidus a été mis en protégé car nous pourrions vouloir qu'un des individu ait une dimension différente des autres.
+
+Nous avons décidé de laisser les nouveaux lapins en jaune et les renards en orange afin de bien visualiser les descendants des individus originaux.
