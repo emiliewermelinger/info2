@@ -5,7 +5,7 @@ Dans notre Projet, nous avons décidé que:
 
 La partie Actors.2 a été faite par nous avec l'aide d'internet. Quelques détail ont été demandé à chatgpt.
 
-La partie test_vie faite à partir des documents vu en cours et de recherche sur internet. Les cycles et les premières collisions ont été concus par chatgpt et adapté par nous.
+La partie Projet a été faite à partir des documents vu en cours et de recherche sur internet. Les cycles et les premières collisions ont été concus par chatgpt et adapté par nous.
 
 ### Précision concernant les choix du code:
 
@@ -18,3 +18,9 @@ La vitesse ainsi que l'énergie maximum que peuvent atteindre les lapins et rena
 Les dimensions des invidus a été mis en protégé car nous pourrions vouloir qu'un des individu ait une dimension différente des autres.
 
 Nous avons décidé de laisser les nouveaux lapins en jaune et les renards en orange afin de bien visualiser les descendants des individus originaux.
+
+### Remarque 
+
+Nous avons remarqué que le déplacement ainsi que le nombre d'individus restant n'est pas similaire à l'exemple proposé. Nous ne saurions dire quels sont les paramètres qu'il faudrait modifier afin que ces derniers ressemblent à l'exemple.
+
+L'implémentation de l'augmentation de l'âge des renards et lapins ne fonctionne pas. Nous ne savons pas pourquoi.

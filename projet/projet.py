@@ -107,9 +107,9 @@ class App:
         self.__init_screen()
         self.__init_actors()
         self.__running = True
-        self.__cycle_count = 0  # Initialisation du compteur de cycles
-        self.__max_cycles = randint(10, 50)  # Nombre aléatoire de cycles entre 10 et 50
-        self.__frames_per_cycle = 10 # Nombre de frames par cycle
+        self.__cycle_count = 0  
+        self.__max_cycles = randint(10, 50) 
+        self.__frames_per_cycle = 10 
         self.__frame_count = 0
         self.cycle_counter = 0 
         self.display_population()
@@ -203,18 +203,19 @@ class App:
         self.__player_sprite.update()
         self.__actors_sprites.update()
 
-        # Lapins mangent plantes
+# Lapins mangent plantes
         collisions = pygame.sprite.groupcollide(self.lapins, self.plants, False, True)
         for lapin, plantes in collisions.items():
             for plante in plantes:
                 lapin._actor.rencontrer_plante(plante)
      
-        # Renards mangent lapins
+# Renards mangent lapins
         collisions = pygame.sprite.groupcollide(self.renards, self.lapins, False, True)
         for renard, lapins in collisions.items():
             for lapin in lapins:
                 renard._actor.rencontrer_lapin(lapin._actor)
-
+                
+# Lapins se reproduisent
         collisions = pygame.sprite.groupcollide(self.lapins, self.lapins, False, False)
         for lapin1, lapins_touches in collisions.items():
             for lapin2 in lapins_touches:
